@@ -223,8 +223,9 @@ public class PartitionBatchConfig {
     /**
      * Creation of bean for {@link MongoItemReaderBuilder<Customer>}
      *
-     * @param minValue
-     * @param maxValue
+     * @param pageNo
+     * @param pageSize
+     * @param maxSize
      * @param mongoTemplate
      * @return a bean of {@link MongoItemReaderBuilder<Customer>}
      */
