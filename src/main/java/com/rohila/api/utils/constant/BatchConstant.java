@@ -28,8 +28,6 @@ public class BatchConstant {
     public static final String MIGRATE_DATA_WRITER = "migrateDataWriter";
     /** Constant declaration for MIGRATE_DATA_PROCESSOR */
     public static final String MIGRATE_DATA_PROCESSOR = "migrateDataProcessor";
-    /** Constant declaration for MIGRATE_DATA_COMPOSIT_PROCESSOR */
-    public static final String MIGRATE_DATA_COMPOSITE_PROCESSOR = "migrateDataCompositProcessor";
     /** Constant declaration for MONGO_JOB_EXECUTION_LISTENER */
     public static final String BATCH_JOB_EXECUTION_LISTENER = "jobExecutionListener";
     /** Constant declaration for MONGO_STEP_EXECUTION_LISTENER */
@@ -58,8 +56,6 @@ public class BatchConstant {
     /** Constant declaration for JOB_PARAMETERS_SRC_COLLECTION_NAME */
     public static final String JOB_PARAMETERS_SOURCE_NAME = "#{jobParameters['source']}";
 
-    /** Constant declaration for JOB_PARAMETERS_IDENTIFIER_NAME */
-    public static final String JOB_PARAMETERS_IDENTIFIER_NAME = "#{jobParameters['identifier']}";
     /** Constant declaration for JOB_ID */
     public static final String JOB_ID = "JobId";
     /** Constant declaration for DATE */

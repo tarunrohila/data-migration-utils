@@ -2,6 +2,7 @@ package com.rohila.api.utils.repository;
 
 import com.rohila.api.utils.repository.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,4 +13,4 @@ import org.springframework.stereotype.Repository;
  * @since April 15, 2023
  */
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {}
+public interface CustomerRepository extends MongoRepository<Customer, Long> {}

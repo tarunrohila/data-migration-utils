@@ -42,7 +42,6 @@ public class BatchController {
     @GetMapping(EXECUTE_URI)
     public String executeBatch(
             @RequestParam("source") String source,
-            @RequestParam("identifier") String identifier,
             @RequestParam("destination") String destination)
             throws Exception {
         StopWatch watch = new StopWatch();
@@ -55,7 +54,6 @@ public class BatchController {
                         .addLong(TIME, System.currentTimeMillis())
                         .addString(SOURCE, source)
                         .addString(DESTINATION, destination)
-                        .addString("identifier", identifier)
                         .toJobParameters();
         LOGGER.debug("executing batch job with jobParameters", jobParameters);
         jobLauncher.run(job, jobParameters);

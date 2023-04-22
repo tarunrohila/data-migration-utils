@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 
-    /** Autowired dependency for {@link CustomerMongoRepository} */
+    /** Autowired dependency for {@link CustomerRepository} */
     @Autowired public CustomerRepository customerMongoRepository;
 
     /** Autowired dependency for {@link CustomerRepository} */

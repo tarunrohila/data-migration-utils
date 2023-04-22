@@ -1,6 +1,6 @@
 package com.rohila.api.utils.batch.processor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rohila.api.utils.repository.entity.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -12,24 +12,10 @@ import org.springframework.batch.item.ItemProcessor;
  * @version 1.0
  * @since April 15, 2023
  */
-public class CustomItemProcessor<S, T> implements ItemProcessor<S, T> {
+public class CustomItemProcessor implements ItemProcessor<Customer, Customer> {
 
     /** Logger declaration */
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomItemProcessor.class);
-
-    /** Variable declaration for sourceClazz */
-    private Class<S> sourceClazz;
-
-    /** Variable declaration for targetClazz */
-    private Class<T> targetClazz;
-
-    /** Constructor declaration */
-    public CustomItemProcessor() {}
-
-    public CustomItemProcessor(Class<S> sourceClazz, Class<T> targetClazz) {
-        this.sourceClazz = sourceClazz;
-        this.targetClazz = targetClazz;
-    }
 
     /**
      * Process the provided item, returning a potentially modified or new item for continued
@@ -44,13 +30,13 @@ public class CustomItemProcessor<S, T> implements ItemProcessor<S, T> {
      *       item)
      * </ul>
      *
-     * @param source to be processed, never {@code null}.
+     * @param customer to be processed, never {@code null}.
      * @return potentially modified or new item for continued processing, {@code null} if processing
      *     of the provided item should not continue.
      * @throws Exception thrown if exception occurs during processing.
      */
     @Override
-    public T process(S source) throws Exception {
-        return new ObjectMapper().convertValue(source, this.targetClazz);
+    public Customer process(Customer customer) throws Exception {
+        return customer;
     }
 }

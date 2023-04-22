@@ -1,10 +1,11 @@
 package com.rohila.api.utils.repository.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Class which is used to create mongo document for {@link Customer}
@@ -17,16 +18,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// @Document
-@Entity
-@Table(name = "CUSTOMER")
+@Document(collection = "customer1")
+//@Entity
+//@Table(name = "CUSTOMER")
 public class Customer {
     /** variable declaration for id */
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     /** variable declaration for name */
     private String name;
     /** variable declaration for active */
-    private String active;
+    private Boolean active;
 }

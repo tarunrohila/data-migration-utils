@@ -1,7 +1,5 @@
 package com.rohila.api.utils.config;
 
-import static com.rohila.api.utils.constant.AppConstant.*;
-
 import com.mongodb.Block;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -14,10 +12,9 @@ import com.mongodb.connection.SslSettings;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**
@@ -38,16 +35,13 @@ public class MongoDbConfig {
      *
      * @return a bean of {@link MongoClient}
      */
-    /*@Bean
-    @Primary
-    public MongoClient mongoClient(
-            final @Qualifier(MONGO_DB_CONFIG_PROPERTIES) MongoDbConfigProperties
-                            mongoDbConfigProperties) {
+    @Bean
+    public MongoClient mongoClient(final MongoDbConfigProperties mongoDbConfigProperties) {
         LOGGER.trace(
                 "A bean of type = MongoClient is created with name = mongoClient, mongoClient({})",
                 mongoDbConfigProperties);
         return MongoClients.create(mongoClientSettings(mongoDbConfigProperties));
-    }*/
+    }
 
     /**
      * Creation of bean for {@link MongoTemplate}
@@ -55,94 +49,10 @@ public class MongoDbConfig {
      * @param mongoClient
      * @return a bean of {@link MongoTemplate}
      */
-    /*@Bean
+    @Bean
     @Primary
     public MongoTemplate mongoTemplate(
-            final MongoClient mongoClient,
-            final @Qualifier(MONGO_DB_CONFIG_PROPERTIES) MongoDbConfigProperties
-                            mongoDbConfigProperties) {
-        LOGGER.trace(
-                "A bean of type = MongoTemplate is created with name = mongoTemplate, mongoTemplate({}, {})",
-                mongoClient,
-                mongoDbConfigProperties);
-        return new MongoTemplate(mongoClient, mongoDbConfigProperties.getDatabase());
-    }*/
-
-    /**
-     * Creation of bean for {@link MongoClient}
-     *
-     * @return a bean of {@link MongoClient}
-     */
-    @Bean(SRC_MONGO_CLIENT)
-    @ConditionalOnProperty(
-            prefix = APP_BATCH_CONFIG_PREFIX,
-            name = SOURCE_DB,
-            havingValue = MONGODB)
-    public MongoClient srcMongoClient(
-            final @Qualifier(SRC_MONGO_DB_CONFIG_PROPERTIES) MongoDbConfigProperties
-                            mongoDbConfigProperties) {
-        LOGGER.trace(
-                "A bean of type = MongoClient is created with name = srcMongoClient, srcMongoClient({})",
-                mongoDbConfigProperties);
-        return MongoClients.create(mongoClientSettings(mongoDbConfigProperties));
-    }
-
-    /**
-     * Creation of bean for {@link MongoTemplate}
-     *
-     * @param mongoClient
-     * @return a bean of {@link MongoTemplate}
-     */
-    @Bean(SRC_MONGO_TEMPLATE)
-    @ConditionalOnProperty(
-            prefix = APP_BATCH_CONFIG_PREFIX,
-            name = SOURCE_DB,
-            havingValue = MONGODB)
-    public MongoTemplate srcMongoTemplate(
-            final @Qualifier(SRC_MONGO_CLIENT) MongoClient mongoClient,
-            final @Qualifier(SRC_MONGO_DB_CONFIG_PROPERTIES) MongoDbConfigProperties
-                            mongoDbConfigProperties) {
-        LOGGER.trace(
-                "A bean of type = MongoTemplate is created with name = srcMongoTemplate, srcMongoTemplate({}, {})",
-                mongoClient,
-                mongoDbConfigProperties);
-        return new MongoTemplate(mongoClient, mongoDbConfigProperties.getDatabase());
-    }
-
-    /**
-     * Creation of bean for {@link MongoClient}
-     *
-     * @return a bean of {@link MongoClient}
-     */
-    @Bean(DEST_MONGO_CLIENT)
-    @ConditionalOnProperty(
-            prefix = APP_BATCH_CONFIG_PREFIX,
-            name = DESTINATION_DB,
-            havingValue = MONGODB)
-    public MongoClient destMongoClient(
-            final @Qualifier(DEST_MONGO_DB_CONFIG_PROPERTIES) MongoDbConfigProperties
-                            mongoDbConfigProperties) {
-        LOGGER.trace(
-                "A bean of type = MongoClient is created with name = destMongoClient, destMongoClient({})",
-                mongoDbConfigProperties);
-        return MongoClients.create(mongoClientSettings(mongoDbConfigProperties));
-    }
-
-    /**
-     * Creation of bean for {@link MongoTemplate}
-     *
-     * @param mongoClient
-     * @return a bean of {@link MongoTemplate}
-     */
-    @Bean(DEST_MONGO_TEMPLATE)
-    @ConditionalOnProperty(
-            prefix = APP_BATCH_CONFIG_PREFIX,
-            name = DESTINATION_DB,
-            havingValue = MONGODB)
-    public MongoTemplate destMongoTemplate(
-            final @Qualifier(DEST_MONGO_CLIENT) MongoClient mongoClient,
-            final @Qualifier(DEST_MONGO_DB_CONFIG_PROPERTIES) MongoDbConfigProperties
-                            mongoDbConfigProperties) {
+            final MongoClient mongoClient, final MongoDbConfigProperties mongoDbConfigProperties) {
         LOGGER.trace(
                 "A bean of type = MongoTemplate is created with name = mongoTemplate, mongoTemplate({}, {})",
                 mongoClient,
