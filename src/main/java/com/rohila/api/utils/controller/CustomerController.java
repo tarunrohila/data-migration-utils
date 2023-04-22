@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +34,7 @@ public class CustomerController {
         Executor executor = Executors.newFixedThreadPool(10);
         executor.execute(
                 () -> {
-                    IntStream.range(0, 10)
+                    IntStream.range(0, 1008)
                             .mapToObj(
                                     value ->
                                             Customer.builder()

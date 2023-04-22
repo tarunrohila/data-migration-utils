@@ -23,6 +23,9 @@ public class CustomMongoItemReaderBuilder<T> {
     protected int page = 0;
     /** Variable declaration for pageSize */
     protected int pageSize = 10;
+
+    /** Variable declaration for maxSize */
+    protected int maxSize;
     /** Variable declaration for template */
     private MongoOperations template;
     /** Variable declaration for jsonQuery */
@@ -271,6 +274,11 @@ public class CustomMongoItemReaderBuilder<T> {
         return this;
     }
 
+    public CustomMongoItemReaderBuilder<T> maxSize(int maxSize) {
+        this.maxSize = maxSize;
+        return this;
+    }
+
     /**
      * Validates and builds a {@link CustomMongoItemReader}.
      *
@@ -306,6 +314,7 @@ public class CustomMongoItemReaderBuilder<T> {
         reader.setCurrentItemCount(this.currentItemCount);
         reader.setMaxItemCount(this.maxItemCount);
         reader.setPage(this.page);
+        reader.setMaxSize(this.maxSize);
 
         return reader;
     }

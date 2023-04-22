@@ -36,37 +36,33 @@ public class MongoRangePartitioner implements Partitioner {
     @Override
     public Map<String, ExecutionContext> partition(final int gridSize) {
         LOGGER.info("creating partitions with gridSize = [{}]", gridSize);
-        Long min = 1L;
-        Long max = getMongoTemplate().count(new Query(), getCollectionName());
+        int min = 1;
+        int max = (int) getMongoTemplate().count(new Query(), getCollectionName());
         LOGGER.info("No of records = [{}] found based on query criteria = [{}]", max);
-        Long targetSize = max / gridSize;
+        int targetSize = max / gridSize;
 
         LOGGER.info("Based on the records calculated targetSize = [{}]", targetSize);
         Map<String, ExecutionContext> result = new HashMap<>();
 
-        Long number = 0L;
-        Long start = min;
-        Long end = start + targetSize - 1;
-        int offset = 0;
+        int number = 0;
+        int start = min;
+        int end = start + targetSize - 1;
         while (start <= max) {
             ExecutionContext value = new ExecutionContext();
             if (end >= max) {
                 end = max;
             }
-            value.putInt("offset", offset);
-            value.putLong("minValue", start);
-            value.putLong("maxValue", end);
-            value.putInt("pageNo", number.intValue());
-            int endOffset = end.intValue() - start.intValue() + 1;
-            value.putInt("pageSize", endOffset);
+            value.putInt("pageNo", number);
+            value.putInt("pageSize", targetSize);
+            value.putInt("maxSize", end - start + 1);
             result.put("partition" + number, value);
             LOGGER.info(
-                    "Starting value start = [{}] and Ending value end = [{}], pageNo = [{}], pageSize = [{}]",
+                    "Starting value start = [{}] and Ending value end = [{}], pageNo = [{}], pageSize = [{}], maxSize = [{}]",
                     start,
                     end,
-                    number.intValue(),
-                    endOffset);
-            offset += endOffset;
+                    number,
+                    targetSize,
+                    end - start + 1);
             start += targetSize;
             end += targetSize;
             number++;

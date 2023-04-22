@@ -22,6 +22,9 @@ public class CustomMongoItemReader<T> extends MongoItemReader<T> {
     /** counter declaration */
     private final AtomicInteger counter = new AtomicInteger(0);
 
+    /** Variable declaration for maxSize */
+    protected int maxSize;
+
     /** Constructor declaration */
     public CustomMongoItemReader() {
         super();
@@ -62,12 +65,16 @@ public class CustomMongoItemReader<T> extends MongoItemReader<T> {
                 }
             }
 
-            if (results.hasNext() && counter.get() < pageSize) {
+            if (results.hasNext() && (counter.get() < maxSize)) {
                 counter.getAndIncrement();
                 return results.next();
             } else {
                 return null;
             }
         }
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 }

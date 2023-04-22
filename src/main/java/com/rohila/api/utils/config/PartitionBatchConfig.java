@@ -1,6 +1,5 @@
 package com.rohila.api.utils.config;
 
-import static com.rohila.api.utils.constant.AppConstant.*;
 import static com.rohila.api.utils.constant.BatchConstant.*;
 
 import com.rohila.api.utils.batch.partitioner.MongoRangePartitioner;
@@ -30,7 +29,6 @@ import org.springframework.batch.item.data.builder.MongoItemWriterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
@@ -75,7 +73,8 @@ public class PartitionBatchConfig {
                 jobRepository,
                 migrateDataMasterStep,
                 mongoJobExecutionListener);
-        return new JobBuilder(MIGRATE_DATA_JOB).repository(jobRepository)
+        return new JobBuilder(MIGRATE_DATA_JOB)
+                .repository(jobRepository)
                 .listener(mongoJobExecutionListener)
                 .start(migrateDataMasterStep)
                 .build();
@@ -106,7 +105,8 @@ public class PartitionBatchConfig {
                 rangePartitioner,
                 migrateDataPartitionHandler,
                 mongoStepExecutionListener);
-        return new StepBuilder(MIGRATE_DATA_MASTER_STEP).repository(jobRepository)
+        return new StepBuilder(MIGRATE_DATA_MASTER_STEP)
+                .repository(jobRepository)
                 .listener(mongoStepExecutionListener)
                 .partitioner(migrateDataSlaveStep.getName(), rangePartitioner)
                 .partitionHandler(migrateDataPartitionHandler)
@@ -142,7 +142,8 @@ public class PartitionBatchConfig {
                 migrateDataReader,
                 migrateDataProcessor,
                 migrateDataWriter);
-        return new StepBuilder(MIGRATE_DATA_SLAVE_STEP).repository(jobRepository)
+        return new StepBuilder(MIGRATE_DATA_SLAVE_STEP)
+                .repository(jobRepository)
                 .listener(mongoStepExecutionListener)
                 .<Customer, Customer>chunk(batchConfigProperties.getChunkSize())
                 .reader(migrateDataReader)
@@ -231,16 +232,14 @@ public class PartitionBatchConfig {
     @StepScope
     public ItemReader<Customer> migrateDataReader(
             final @Value(JOB_PARAMETERS_SOURCE_NAME) String srcCollectionName,
-            final @Value(STEP_EXECUTION_CONTEXT_MIN_VALUE) Long minValue,
-            final @Value(STEP_EXECUTION_CONTEXT_MAX_VALUE) Long maxValue,
             final @Value(STEP_EXECUTION_CONTEXT_PAGE_NO) int pageNo,
             final @Value(STEP_EXECUTION_CONTEXT_PAGE_SIZE) int pageSize,
+            final @Value(STEP_EXECUTION_CONTEXT_MAX_SIZE) int maxSize,
             final MongoTemplate mongoTemplate) {
         LOGGER.trace(
                 "A bean of type = ItemReader is created with name = migrateDataReader, migrateDataReader({},{},{},{})",
                 srcCollectionName,
-                minValue,
-                maxValue,
+                maxSize,
                 pageNo);
         return new CustomMongoItemReaderBuilder<Customer>()
                 .name(MIGRATE_DATA_READER)
@@ -250,6 +249,7 @@ public class PartitionBatchConfig {
                 .query(new Query())
                 .page(pageNo)
                 .pageSize(pageSize)
+                .maxSize(maxSize)
                 .sorts(
                         new HashMap<String, Sort.Direction>() {
                             {

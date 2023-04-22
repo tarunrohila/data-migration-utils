@@ -51,6 +51,10 @@ public class BatchConstant {
     /** Constant declaration for STEP_EXECUTION_CONTEXT_PAGE_SIZE */
     public static final String STEP_EXECUTION_CONTEXT_PAGE_SIZE =
             "#{stepExecutionContext['pageSize']}";
+
+    /** Constant declaration for STEP_EXECUTION_CONTEXT_MAX_SIZE */
+    public static final String STEP_EXECUTION_CONTEXT_MAX_SIZE =
+            "#{stepExecutionContext['maxSize']}";
     /** Constant declaration for JOB_PARAMETERS_DEST_COLLECTION_NAME */
     public static final String JOB_PARAMETERS_DESTINATION_NAME = "#{jobParameters['destination']}";
     /** Constant declaration for JOB_PARAMETERS_SRC_COLLECTION_NAME */

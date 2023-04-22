@@ -1,6 +1,5 @@
 package com.rohila.api.utils.repository.entity;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,12 +18,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "customer1")
-//@Entity
-//@Table(name = "CUSTOMER")
+// @Entity
+// @Table(name = "CUSTOMER")
 public class Customer {
     /** variable declaration for id */
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    //    @Id
+    //    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     /** variable declaration for name */
     private String name;

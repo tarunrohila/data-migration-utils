@@ -41,8 +41,7 @@ public class BatchController {
 
     @GetMapping(EXECUTE_URI)
     public String executeBatch(
-            @RequestParam("source") String source,
-            @RequestParam("destination") String destination)
+            @RequestParam("source") String source, @RequestParam("destination") String destination)
             throws Exception {
         StopWatch watch = new StopWatch();
         watch.start();
